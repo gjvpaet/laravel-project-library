@@ -15,7 +15,6 @@ Route::get('/', [
     'uses' => 'HomeController@index',
     'as' => 'home'
 ]);
-
 Auth::routes();
-
-//Route::get('/home', 'HomeController@index');
+Route::resource('books', 'BookController');
+Route::get('/home', 'HomeController@index');
