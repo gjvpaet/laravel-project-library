@@ -5,22 +5,58 @@
     <div class="row">
         <div class="alert alert-success alert-dismissible hidden" role="alert" id="success-alert">
             <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Success!</strong> You successfully added a new book.
+            <strong>Success!</strong> <span id="alert-message"></span>
         </div>
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">All Books</div>
                 <div class="panel-body">
-                    {{-- <input type="button" value="Add New Book" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg" id="add-new-book"> --}}
-                    <button class="btn btn-primary" id="add-new-book" data-toggle="modal" data-target=".bs-example-modal-lg" type="button">
+                    <button class="btn btn-primary" id="add-book-btn" data-toggle="modal" data-target=".bs-example-modal-lg" type="button" data-action="add">
                         <span class="glyphicon glyphicon-plus"></span> Add New Book
                     </button>
-                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="my-modal">
+                </div>
+                <table class="table table-responsive table-hover table-striped" id="table">
+                    <thead>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Genre</th>
+                        <th>Library Section</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        @foreach($books as $book)
+                            <tr id="item-{{ $book->id }}">
+                                <th id="book-table-id">{{ $book->id }}</th>
+                                <td id="book-table-title">{{ $book->title }}</td>
+                                <td id="book-table-author">{{ $book->author }}</td>
+                                <td id="book-table-genre">{{ $book->genre }}</td>
+                                <td id="book-table-library-section">{{ $book->library_section }}</td>
+                                <td>{{ $book->created_at }}</td>
+                                <td>{{ $book->updated_at }}</td>
+                                <td>
+                                    <button class="btn btn-primary edit-book" id="edit-book-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="{{ $book->id }}" data-title="{{ $book->title }}" data-author="{{ $book->author }}" data-genre="{{ $book->genre }}" data-library-section="{{ $book->library_section }}" data-action="edit">
+                                        <span class="glyphicon glyphicon-edit"></span> Edit
+                                    </button>
+                                    <button class="btn btn-danger" id="delete-book-btn">
+                                        <span class="glyphicon glyphicon-trash"></span> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    {{ $books->links() }}
+                </div>
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="my-modal">
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Add New Book</h4>
+                                    <h4 class="modal-title" id="modal-title"></h4>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group row add">
@@ -53,36 +89,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-responsive table-hover table-striped" id="table">
-                    <thead>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Genre</th>
-                        <th>Library Section</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <th>Action</th>
-                    </thead>
-                    <tbody>
-                        @foreach($books as $book)
-                            <tr>
-                                <th>{{ $book->id }}</th>
-                                <td>{{ $book->title }}</td>
-                                <td>{{ $book->author }}</td>
-                                <td>{{ $book->genre }}</td>
-                                <td>{{ $book->library_section }}</td>
-                                <td>{{ $book->created_at }}</td>
-                                <td>{{ $book->updated_at }}</td>
-                                <td></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="text-center">
-                    {{ $books->links() }}
-                </div>
             </div>
         </div>
     </div>
