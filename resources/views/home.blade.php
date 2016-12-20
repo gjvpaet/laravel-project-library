@@ -29,18 +29,18 @@
                     <tbody>
                         @foreach($books as $book)
                             <tr id="item-{{ $book->id }}">
-                                <th id="book-table-id">{{ $book->id }}</th>
-                                <td id="book-table-title">{{ $book->title }}</td>
-                                <td id="book-table-author">{{ $book->author }}</td>
-                                <td id="book-table-genre">{{ $book->genre }}</td>
-                                <td id="book-table-library-section">{{ $book->library_section }}</td>
+                                <th>{{ $book->id }}</th>
+                                <td>{{ $book->title }}</td>
+                                <td>{{ $book->author }}</td>
+                                <td>{{ $book->genre }}</td>
+                                <td>{{ $book->library_section }}</td>
                                 <td>{{ $book->created_at }}</td>
                                 <td>{{ $book->updated_at }}</td>
                                 <td>
                                     <button class="btn btn-primary edit-book" id="edit-book-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="{{ $book->id }}" data-title="{{ $book->title }}" data-author="{{ $book->author }}" data-genre="{{ $book->genre }}" data-library-section="{{ $book->library_section }}" data-action="edit">
                                         <span class="glyphicon glyphicon-edit"></span> Edit
                                     </button>
-                                    <button class="btn btn-danger" id="delete-book-btn">
+                                    <button class="btn btn-danger delete-book" id="delete-book-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="{{ $book->id }}" data-title="{{ $book->title }}" data-action="delete">
                                         <span class="glyphicon glyphicon-trash"></span> Delete
                                     </button>
                                 </td>
@@ -52,43 +52,48 @@
                     {{ $books->links() }}
                 </div>
                 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="my-modal">
-                        <div class="modal-dialog modal-md" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title" id="modal-title"></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group row add">
-                                        <div class="col-lg-12" id="title-div">
-                                            <label for="title">Title:</label>
-                                            <input type="text" class="form-control" id="title" name="title">
-                                            <span class="help-block" id="title-help-block"></span>
-                                        </div>
-                                        <div class="col-lg-12" id="author-div">
-                                            <label for="author">Author:</label>
-                                            <input type="text" class="form-control" id="author" name="author">
-                                            <span class="help-block" id="author-help-block"></span>
-                                        </div>
-                                        <div class="col-lg-12" id="genre-div">
-                                            <label for="genre">Genre:</label>
-                                            <input type="text" class="form-control" id="genre" name="genre">
-                                            <span class="help-block" id="genre-help-block"></span>
-                                        </div>
-                                        <div class="col-lg-12" id="library-section-div">
-                                            <label for="library-section">Library Section:</label>
-                                            <input type="text" class="form-control" id="library-section" name="library-section">
-                                            <span class="help-block" id="library-section-help-block"></span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <input type="submit" value="Save" class="btn btn-primary" id="save-btn">
-                                        </div>
-                                        {{ csrf_field() }}
+                    <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title" id="modal-title"></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group row add">
+                                    <div class="col-lg-12" id="title-div">
+                                        <label for="title">Title:</label>
+                                        <input type="text" class="form-control" id="title" name="title">
+                                        <span class="help-block" id="title-help-block"></span>
                                     </div>
+                                    <div class="col-lg-12" id="author-div">
+                                        <label for="author">Author:</label>
+                                        <input type="text" class="form-control" id="author" name="author">
+                                        <span class="help-block" id="author-help-block"></span>
+                                    </div>
+                                    <div class="col-lg-12" id="genre-div">
+                                        <label for="genre">Genre:</label>
+                                        <input type="text" class="form-control" id="genre" name="genre">
+                                        <span class="help-block" id="genre-help-block"></span>
+                                    </div>
+                                    <div class="col-lg-12" id="library-section-div">
+                                        <label for="library-section">Library Section:</label>
+                                        <input type="text" class="form-control" id="library-section" name="library-section">
+                                        <span class="help-block" id="library-section-help-block"></span>
+                                    </div>
+                                    {{ csrf_field() }}
+                                </div>
+                                <div id="delete-content">
+                                    Are you sure you want to delete <span id="title-span"></span>? button 
+                                </div>
+                                <div class="modal-footer">
+                                     <button type="button" class="btn" id="action-btn">
+                                        <span id="action-btn-span" class="glyphicon"></span>
+                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>

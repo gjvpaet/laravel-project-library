@@ -15,30 +15,57 @@ function removeErrorClass () {
     $('#library-section-help-block').text(''); 
 }
 
-function removeFieldValues()
-{
+function removeFieldValues () {
     $('#title').val('');
     $('#author').val('');
     $('#genre').val('');
     $('#library-section').val('');
 }
 
+function showFormGroup () {
+    $('#action-btn-span').text(' Save');
+    $('#action-btn-span').removeClass('glyphicon-trash');
+    $('#action-btn-span').addClass('glyphicon-check');
+
+    $('#action-btn').removeClass('btn-danger');
+    $('#action-btn').addClass('btn-primary');
+
+    $('.form-group').show();
+    $('#delete-content').hide();
+}
+
+function showDeleteContent () {
+    $('#action-btn-span').text(' Delete');
+    $('#action-btn-span').removeClass('glyphicon-check');
+    $('#action-btn-span').addClass('glyphicon-trash');
+
+    $('#action-btn').removeClass('btn-primary');
+    $('#action-btn').addClass('btn-danger');
+
+    $('#delete-content').show();
+    $('.form-group').hide();
+}
+
 $('#add-book-btn').click(function (e) { 
     e.preventDefault();
 
-    removeErrorClass();
-    removeFieldValues();
+    showFormGroup();
 
     $('#modal-title').text('Add New Book');
     action = $(this).data('action');
+
+    removeErrorClass();
+    removeFieldValues();
 });
 
 $('.edit-book').click(function (e) { 
     e.preventDefault();
     
-    $('#modal-title').text('Edit Book');
+    showFormGroup();
 
+    $('#modal-title').text('Edit Book');
     action = $(this).data('action');
+
     bookId = $(this).data('id');
     $('#title').val($(this).data('title'));   
     $('#author').val($(this).data('author'));
@@ -48,7 +75,19 @@ $('.edit-book').click(function (e) {
     removeErrorClass(); 
 });
 
-$('#save-btn').click(function (e) {
+$('.delete-book').click(function (e) { 
+    e.preventDefault();
+    
+    showDeleteContent();
+
+    $('#modal-title').text('Delete Book');
+    $('#title-span').text($(this).data('title'));
+    action = $(this).data('action');
+
+    bookId = $(this).data('id');
+});
+
+$('#action-btn').click(function (e) {
     e.preventDefault();
 
     if (action == 'add') {
@@ -56,11 +95,11 @@ $('#save-btn').click(function (e) {
             type: 'POST',
             url: 'books',
             data: {
-                _token : $('input[name="_token"]').val(),
-                title : $('#title').val(),
-                author : $('#author').val(),
-                genre : $('#genre').val(),
-                librarySection : $('#library-section').val()
+                _token: $('input[name="_token"]').val(),
+                title: $('#title').val(),
+                author: $('#author').val(),
+                genre: $('#genre').val(),
+                librarySection: $('#library-section').val()
             },
             dataType: 'json',
             success: function (response) {
@@ -122,11 +161,11 @@ $('#save-btn').click(function (e) {
             type: 'PUT',
             url: 'books/' + bookId,
             data: {
-                _token : $('input[name="_token"]').val(),
-                title : $('#title').val(),
-                author : $('#author').val(),
-                genre : $('#genre').val(),
-                librarySection : $('#library-section').val()
+                _token: $('input[name="_token"]').val(),
+                title: $('#title').val(),
+                author: $('#author').val(),
+                genre: $('#genre').val(),
+                librarySection: $('#library-section').val()
             },
             dataType: 'json',
             success: function (response) {
@@ -171,6 +210,22 @@ $('#save-btn').click(function (e) {
                     $('#alert-message').text('You successfully updated a book');
                     $('#my-modal').modal('hide');
                 }
+            }
+        });
+    } else if (action == 'delete') {
+        $.ajax({
+            type: 'DELETE',
+            url: 'books/' + bookId,
+            data: {
+                _token: $('input[name="_token"]').val()
+            },
+            dataType: 'json',
+            success: function (response) {
+                $('#item-' + bookId).remove();
+
+                $('#success-alert').removeClass('hidden');
+                $('#alert-message').text('You successfully deleted a book');
+                $('#my-modal').modal('hide');
             }
         });
     }
