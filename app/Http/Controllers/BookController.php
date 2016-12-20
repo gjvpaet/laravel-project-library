@@ -2,6 +2,7 @@
 
 namespace Library\Http\Controllers;
 
+use DB;
 use Validator;
 use Library\Book;
 use Illuminate\Http\Request;
@@ -139,5 +140,23 @@ class BookController extends Controller
         Book::find($id)->delete();
 
         return response()->json();
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $rules = ['keyword' => 'required'];
+
+        $validator = Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+            $books = Book::where(DB::raw("CONCAT(title, ' ', author, ' ', genre, ' ', library_section)"), 'LIKE', "%{$keyword}%")->get();
+
+            return response()->json($books);
+        }
     }
 }

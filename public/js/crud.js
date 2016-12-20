@@ -46,9 +46,19 @@ function showDeleteContent () {
     $('.form-group').hide();
 }
 
-$('#add-book-btn').click(function (e) { 
-    e.preventDefault();
+// $('.add-book').click(function (e) { 
+//     e.preventDefault();
 
+//     showFormGroup();
+
+//     $('#modal-title').text('Add New Book');
+//     action = $(this).data('action');
+
+//     removeErrorClass();
+//     removeFieldValues();
+// });
+
+$('.panel-body').on('click', '.add-book', function () {
     showFormGroup();
 
     $('#modal-title').text('Add New Book');
@@ -58,9 +68,24 @@ $('#add-book-btn').click(function (e) {
     removeFieldValues();
 });
 
-$('.edit-book').click(function (e) { 
-    e.preventDefault();
+// $('.edit-book').click(function (e) { 
+//     e.preventDefault();
     
+//     showFormGroup();
+
+//     $('#modal-title').text('Edit Book');
+//     action = $(this).data('action');
+
+//     bookId = $(this).data('id');
+//     $('#title').val($(this).data('title'));   
+//     $('#author').val($(this).data('author'));
+//     $('#genre').val($(this).data('genre'));
+//     $('#library-section').val($(this).data('library-section'));
+
+//     removeErrorClass(); 
+// });
+
+$(document).on('click', '.edit-book', function () {
     showFormGroup();
 
     $('#modal-title').text('Edit Book');
@@ -75,9 +100,19 @@ $('.edit-book').click(function (e) {
     removeErrorClass(); 
 });
 
-$('.delete-book').click(function (e) { 
-    e.preventDefault();
+// $('.delete-book').click(function (e) { 
+//     e.preventDefault();
     
+//     showDeleteContent();
+
+//     $('#modal-title').text('Delete Book');
+//     $('#title-span').text($(this).data('title'));
+//     action = $(this).data('action');
+
+//     bookId = $(this).data('id');
+// });
+
+$(document).on('click', '.delete-book', function () {
     showDeleteContent();
 
     $('#modal-title').text('Delete Book');
@@ -140,14 +175,14 @@ $('#action-btn').click(function (e) {
 
                     var rowCount = $('#table tr').length;
                     if (rowCount < 10) {
-                        $('#table').append("<tr id='item-" + response.id + "'>" + "<th>" + response.id + "</th><td>" + response.title + "</td><td>" + response.author + "</td><td>" + response.genre + "</td><td>" + response.library_section + "</td><td>" + response.created_at + "</td><td>" + response.updated_at + "</td><td>" + "<button class='btn btn-primary' id='edit-book-btn' type='button' data-toggle='modal' data-target='.bs-example-modal-lg' data-id='" + response.id + "' data-title='" + response.title + "' data-author='" + response.author + "' data-genre='" + response.genre + "' data-library-section='" + response.library_section + "' data-action='edit'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='btn btn-danger' id='delete-book-btn'><span class='glyphicon glyphicon-trash'></span> Delete</button>" + "</td>" + "</tr>");   
+                        $('#table').append("<tr id='item-" + response.id + "'>" + "<th>" + response.id + "</th><td>" + response.title + "</td><td>" + response.author + "</td><td>" + response.genre + "</td><td>" + response.library_section + "</td><td>" + response.created_at + "</td><td>" + response.updated_at + "</td><td>" + "<button class='btn btn-primary edit-book' id='edit-book-btn' type='button' data-toggle='modal' data-target='.bs-example-modal-lg' data-id='" + response.id + "' data-title='" + response.title + "' data-author='" + response.author + "' data-genre='" + response.genre + "' data-library-section='" + response.library_section + "' data-action='edit'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='btn btn-danger delete-book' id='delete-book-btn'><span class='glyphicon glyphicon-trash'></span> Delete</button>" + "</td>" + "</tr>");   
                     }
 
                     removeFieldValues();
 
                     $('#success-alert').removeClass('hidden');
                     $('#alert-message').text('You successfully added a new book.');
-                    $('#my-modal').modal('hide');
+                    //$('#my-modal').modal('hide');
                 }
             }, 
             error: function (xhr, ajaxOptions, thrownError) {
@@ -204,11 +239,11 @@ $('#action-btn').click(function (e) {
                 } else {
                     removeErrorClass();
 
-                    $('#item-' + response.id).replaceWith("<tr id='item-" + response.id + "'>" + "<th>" + response.id + "</th><td>" + response.title + "</td><td>" + response.author + "</td><td>" + response.genre + "</td><td>" + response.library_section + "</td><td>" + response.created_at + "</td><td>" + response.updated_at + "</td><td>" + "<button class='btn btn-primary' id='edit-book-btn' type='button' data-toggle='modal' data-target='.bs-example-modal-lg' data-id='" + response.id + "' data-title='" + response.title + "' data-author='" + response.author + "' data-genre='" + response.genre + "' data-library-section='" + response.library_section + "' data-action='edit'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='btn btn-danger' id='delete-book-btn'><span class='glyphicon glyphicon-trash'></span> Delete</button>" + "</td>" + "</tr>");
+                    $('#item-' + response.id).replaceWith("<tr id='item-" + response.id + "'>" + "<th>" + response.id + "</th><td>" + response.title + "</td><td>" + response.author + "</td><td>" + response.genre + "</td><td>" + response.library_section + "</td><td>" + response.created_at + "</td><td>" + response.updated_at + "</td><td>" + "<button class='btn btn-primary edit-book' id='edit-book-btn' type='button' data-toggle='modal' data-target='.bs-example-modal-lg' data-id='" + response.id + "' data-title='" + response.title + "' data-author='" + response.author + "' data-genre='" + response.genre + "' data-library-section='" + response.library_section + "' data-action='edit'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='btn btn-danger' id='delete-book-btn delete-book'><span class='glyphicon glyphicon-trash'></span> Delete</button>" + "</td>" + "</tr>");
 
                     $('#success-alert').removeClass('hidden');
                     $('#alert-message').text('You successfully updated a book');
-                    $('#my-modal').modal('hide');
+                    //$('#my-modal').modal('hide');
                 }
             }
         });
@@ -225,7 +260,7 @@ $('#action-btn').click(function (e) {
 
                 $('#success-alert').removeClass('hidden');
                 $('#alert-message').text('You successfully deleted a book');
-                $('#my-modal').modal('hide');
+                //$('#my-modal').modal('hide');
             }
         });
     }

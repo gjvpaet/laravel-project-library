@@ -3,6 +3,7 @@
 namespace Library\Http\Controllers\Auth;
 
 use Library\User;
+use Library\Role;
 use Library\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;

@@ -7,11 +7,18 @@
             <button class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Success!</strong> <span id="alert-message"></span>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" id="container">
             <div class="panel panel-default">
                 <div class="panel-heading">All Books</div>
                 <div class="panel-body">
-                    <button class="btn btn-primary" id="add-book-btn" data-toggle="modal" data-target=".bs-example-modal-lg" type="button" data-action="add">
+                    <button class="btn btn-default" id="search-btn">
+                        <span class="glyphicon glyphicon-search"></span> Search
+                    </button>
+                    <div class="col-md-5" id="keyword-div">
+                        <input type="text" class="form-control" id="search-keyword" placeholder="Search for title, author, genre, library section...">
+                        <span class="help-block" id="keyword-help-block"></span>
+                    </div>
+                    <button class="btn btn-primary add-book" id="add-book-btn" data-toggle="modal" data-target=".bs-example-modal-lg" type="button" data-action="add">
                         <span class="glyphicon glyphicon-plus"></span> Add New Book
                     </button>
                 </div>
@@ -36,7 +43,7 @@
                                 <td>{{ $book->library_section }}</td>
                                 <td>{{ $book->created_at }}</td>
                                 <td>{{ $book->updated_at }}</td>
-                                <td>
+                                <td id="action-btn-td">
                                     <button class="btn btn-primary edit-book" id="edit-book-btn" type="button" data-toggle="modal" data-target=".bs-example-modal-lg" data-id="{{ $book->id }}" data-title="{{ $book->title }}" data-author="{{ $book->author }}" data-genre="{{ $book->genre }}" data-library-section="{{ $book->library_section }}" data-action="edit">
                                         <span class="glyphicon glyphicon-edit"></span> Edit
                                     </button>
@@ -86,7 +93,7 @@
                                     Are you sure you want to delete <span id="title-span"></span>? button 
                                 </div>
                                 <div class="modal-footer">
-                                     <button type="button" class="btn" id="action-btn">
+                                     <button type="button" class="btn" id="action-btn" data-dismiss="modal">
                                         <span id="action-btn-span" class="glyphicon"></span>
                                      </button>
                                 </div>
@@ -99,4 +106,5 @@
     </div>
 </div>
 <script type="text/javascript" src="/js/crud.js"></script>
+<script type="text/javascript" src="/js/search.js"></script>
 @endsection

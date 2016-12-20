@@ -18,3 +18,7 @@ Route::get('/', [
 Auth::routes();
 Route::resource('books', 'BookController');
 Route::get('/home', 'HomeController@index');
+Route::post('search', [
+    'uses' => 'BookController@search',
+    'as' => 'books.search'
+]);
