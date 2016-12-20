@@ -93,5 +93,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="/js/store.js"></script>
+<script type="text/javascript" src="/js/crud.js"></script>
 @endsection
